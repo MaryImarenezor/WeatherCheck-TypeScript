@@ -13,8 +13,8 @@ const WeatherApp = () => {
   const [zipCode, setZipCode] = useState('');
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loggedInUser, setLoggedInUser] = useState<string | any | null>(null);
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -36,7 +36,7 @@ const WeatherApp = () => {
     //getLocation();
   }, [])
 
-  const handleZipCodeChange = (e) => {
+  const handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setZipCode(e.target.value);
   };
 
@@ -73,7 +73,7 @@ const WeatherApp = () => {
   }
 
   //Function to get weather data using latitude and longitude
-  const getWeatherDataByCoords = async (latitude, longitude) => {
+  const getWeatherDataByCoords = async (latitude: number, longitude: number) => {
     setLoading(true);
     setError(null);
     try {
@@ -94,14 +94,14 @@ const WeatherApp = () => {
     getLocation();
   }
 
-  const handleLogin = async (userData) => {
+  const handleLogin = async (userData: string) => {
     try {
       setWeatherData(null);
       setZipCode('');
 
       setLoggedInUser(userData);
         
-    } catch (error) {
+    } catch (error: any) {
       if (error.response) {
         console.error('Error response status', error.response.status)
         setError('Error during login. Please try again')
@@ -139,7 +139,7 @@ const WeatherApp = () => {
             type="text"
             placeholder="Enter ZIP Code"
             value={zipCode}
-            onChange={handleZipCodeChange}
+            onChange={() => handleZipCodeChange}
           />
           <button className="navbarItem" onClick={getWeatherData} disabled={loading}>
             {loading ? 'Fetching...' : 'Get Weather'}
@@ -153,7 +153,7 @@ const WeatherApp = () => {
 
         {loggedInUser ? (
           <div>
-            <p>Welcome, {loggedInUser.username}!</p>
+            <p>Welcome, {loggedInUser['username']}!</p>
             <Routes>
               <Route
                 path="/"

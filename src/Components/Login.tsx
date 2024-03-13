@@ -3,10 +3,10 @@ import axios from 'axios';
 
 
 
-const Login = ({ onLogin }) => {
+const Login = ({ onLogin }: any) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [error, setError] = useState(null)
+    const [error, setError] = useState<string | null>(null);
 
     const handleLogin = async () => {
         try {
@@ -36,7 +36,7 @@ const Login = ({ onLogin }) => {
             console.log(response.data.message);
             // automatic login user after registration
             handleLogin();
-        } catch (error) {
+        } catch (error: any) {
             if (error.response && error.response.status === 400) {
                 setError('This username already exists. Choose a different username')
             } else {

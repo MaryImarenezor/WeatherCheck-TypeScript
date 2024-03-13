@@ -6,8 +6,8 @@ import WeatherCard from '../WeatherCard'
 const Favorites = () => {
     const [favorites, setFavorites] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [selectedZip, setSelectedZip] = useState(null);
+    const [error, setError] = useState<string | null>(null);
+    const [selectedZip, setSelectedZip] = useState<string | null>(null);
     const [weatherData, setWeatherData] = useState(null);
 
     useEffect(() => {
@@ -25,11 +25,11 @@ const Favorites = () => {
         fetchFavorites();
     }, []);
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (id: string) => {
         try {
             await axios.delete(`http://localhost:5000/api/favorite/${id}`);
             //after successful deletion, update the state to reflect the changes
-            setFavorites((prevFavorites) => prevFavorites.filter((favorite) => favorite._id !== id));
+            setFavorites((prevFavorites) => prevFavorites.filter((favorite) => favorite['_id'] !== id));
             setWeatherData(null);
         } catch (error) {
             console.error('Error deleting favorite', error);
@@ -37,7 +37,7 @@ const Favorites = () => {
         }
     };
 
-    const handleZipClick = async (zip) => {
+    const handleZipClick = async (zip: string) => {
         setSelectedZip(zip);
         try {
             const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=fd953eddf6f83f966d9240b60bd6fb26&units=imperial`);
@@ -58,12 +58,12 @@ const Favorites = () => {
         <div>
           <ul>
             {favorites.map((favorite) => (
-              <li key={favorite._id}>
-                <Link to={`/weather/${favorite.zip}`}>
-                  {favorite.zip}
+              <li key={favorite['_id']}>
+                <Link to={`/weather/${favorite['zip']}`}>
+                  {favorite['zip']}
                 </Link>
-                <button onClick={() => handleZipClick(favorite.zip)}>Get Weather</button>
-                <button onClick={() => handleDelete(favorite._id)}>Delete</button>
+                <button onClick={() => handleZipClick(favorite['zip'])}>Get Weather</button>
+                <button onClick={() => handleDelete(favorite['_id'])}>Delete</button>
               </li>
             ))}
           </ul>

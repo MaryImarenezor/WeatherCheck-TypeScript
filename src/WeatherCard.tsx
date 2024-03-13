@@ -1,10 +1,10 @@
 import React from 'react';
 
-const weatherCard = ({ weatherData }) => {
+const weatherCard = ({ weatherData }: any) => {
 
-  const getIconUrl = (iconCode) => `http://openweathermap.org/img/w/${iconCode}.png`;
+  const getIconUrl = (iconCode: any) => `http://openweathermap.org/img/w/${iconCode}.png`;
 
-  const getTemperatureCategory = (temp) => {
+  const getTemperatureCategory = (temp: any) => {
     if (temp < 50) {
       return 'cold';
     } else if (temp >= 50 && temp < 75) {
@@ -14,7 +14,7 @@ const weatherCard = ({ weatherData }) => {
     }
   };
 
-  const getSuggestedClothing = (temp, description) => {
+  const getSuggestedClothing = (temp: any, description: any) => {
     const temperatureCategory = getTemperatureCategory(temp);
 
     switch (temperatureCategory) {
